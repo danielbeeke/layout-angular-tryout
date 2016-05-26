@@ -1,64 +1,11 @@
-// Our namespace.
-window.octopus = {};
+// The angular app.
+var app = angular.module('layoutApp', []);
 
-// I like the bind prefix more than rv.
-// Rivets is very configurable.
-rivets.configure({
-    prefix: 'bind'
-});
+// The layout controller.
+app.controller('LayoutController', function LayoutController($scope) {
 
-// For this component we use the namespace layout.
-octopus.layout = {
-    toggleSidebar: function () {
-        rivetsData.layout.sidebar.collapsed = !rivetsData.layout.sidebar.collapsed;
-    },
-    setPanelLeftBig: function () {
-        octopus.layout.setPanelBig('left');
-    },
-    setPanelRightBig: function () {
-        octopus.layout.setPanelBig('right');
-    },
-    setPanelsBothMiddle: function () {
-        rivetsData.layout.panel.left = {
-            expanded: false,
-            collapsed: false
-        };
-
-        rivetsData.layout.panel.right = {
-            expanded: false,
-            collapsed: false
-        };
-    },
-    saveState: function () {
-        localStorage.setItem('layoutState', JSON.stringify(rivetsData.layout));
-    },
-    restoreState: function () {
-        var oldState = JSON.parse(localStorage.getItem('layoutState'));
-        if (oldState) {
-            rivetsData.layout = oldState;
-        }
-    },
-    bothPanelsAreMedium: function (a, b) {
-        return a == b && a == false;
-    },
-    setPanelBig: function (panelName) {
-        var oppositePanelName = panelName == 'left' ? 'right' : 'left';
-
-        rivetsData.layout.panel[panelName] = {
-            expanded: true,
-            collapsed: false
-        };
-
-        rivetsData.layout.panel[oppositePanelName] = {
-            expanded: false,
-            collapsed: true
-        };
-    }
-};
-
-// The object with the state of the layout.
-window.rivetsData = {
-    layout: {
+    // The object with the state of the layout.
+    $scope.layout = {
         sidebar: {
             collapsed: false
         },
@@ -74,21 +21,17 @@ window.rivetsData = {
                 collapsed: true
             }
         }
-    },
+    };
 
-    // Reference the functions from our namespace so rivets can use them.
-    functions: octopus.layout
-};
+    $scope.functions = {
 
-// Restore the intial state.
-octopus.layout.restoreState();
+    };
 
-// Bind the rivetsData to the template.
-rivets.bind($('#layout-container'), rivetsData);
 
-// A small trick to block transitions on page load.
-// Because we use a renderer we are a little late when rendering and
-// because of that transitions kick in on initial page load.
-setTimeout(function () {
-    $('body').addClass('transitions-enabled');
-}, 100);
+    // A small trick to block transitions on page load.
+    // Because we use a renderer we are a little late when rendering and
+    // because of that transitions kick in on initial page load.
+    setTimeout(function () {
+        angular.element(document).find('body').addClass('transitions-enabled');
+    }, 0);
+});
