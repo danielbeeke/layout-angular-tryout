@@ -20,26 +20,26 @@
   <div class="layout-container" ng-class="{ 'has-sidebar-collapsed': layout.sidebar.collapsed }" id="layout-container">
     <div class="sidebar">
 
-      <button ng-click="layout.sidebar.collapsed = !layout.sidebar.collapsed">Toggle</button>
+      <button ng-click="functions.toggleSidebar()">Toggle</button>
 
-      <button bind-on-click="functions.setPanelsBothMiddle" bind-unless="functions.bothPanelsAreMedium | call layout.panel.left.expanded layout.panel.right.expanded">Medium</button>
+      <button ng-click="functions.setPanelsBothMiddle()" ng-if="!functions.bothPanelsAreMedium()">Medium</button>
 
-      <button bind-on-click="functions.saveState">Save state</button>
+      <button ng-click="functions.saveState()">Save state</button>
 
-      <button bind-on-click="functions.restoreState">Restore state</button>
+      <button ng-click="functions.restoreState()">Restore state</button>
     </div>
 
     <div class="panels-container">
 
       <div class="panel left" ng-class="{ 'is-expanded': layout.panel.left.expanded, 'is-collapsed': layout.panel.left.collapsed }">
-        <button bind-on-click="functions.setPanelLeftBig" bind-unless="layout.panel.left.expanded">Big</button>
+        <button ng-click="functions.setPanelLeftBig()" ng-if="!layout.panel.left.expanded">Big</button>
 
-        <button bind-on-click="functions.setPanelsBothMiddle" bind-if="layout.panel.left.expanded">Medium</button>
+        <button ng-click="functions.setPanelsBothMiddle()" ng-if="layout.panel.left.expanded">Medium</button>
       </div>
 
       <div class="panel right" ng-class="{ 'is-expanded': layout.panel.right.expanded, 'is-collapsed': layout.panel.right.collapsed }">
-        <button bind-on-click="functions.setPanelRightBig" bind-unless="layout.panel.right.expanded">Big</button>
-        <button bind-on-click="functions.setPanelsBothMiddle" bind-if="layout.panel.right.expanded">Medium</button>
+        <button ng-click="functions.setPanelRightBig()" ng-if="!layout.panel.right.expanded">Big</button>
+        <button ng-click="functions.setPanelsBothMiddle()" ng-if="layout.panel.right.expanded">Medium</button>
       </div>
 
     </div>

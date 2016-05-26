@@ -24,7 +24,54 @@ app.controller('LayoutController', function LayoutController($scope) {
     };
 
     $scope.functions = {
+        toggleSidebar: function () {
+            $scope.layout.sidebar.collapsed = !$scope.layout.sidebar.collapsed;
+        },
+        setPanelLeftBig: function () {
+            $scope.functions.setPanelBig('left');
+        },
+        setPanelRightBig: function () {
+            $scope.functions.setPanelBig('right');
+        },
+        setPanelsBothMiddle: function () {
+            $scope.layout.panel.left = {
+                expanded: false,
+                collapsed: false
+            };
 
+            $scope.layout.panel.right = {
+                expanded: false,
+                collapsed: false
+            };
+        },
+        saveState: function () {
+            localStorage.setItem('layoutState', JSON.stringify($scope.layout));
+        },
+        restoreState: function () {
+            var oldState = JSON.parse(localStorage.getItem('layoutState'));
+            if (oldState) {
+                $scope.layout = oldState;
+            }
+        },
+        bothPanelsAreMedium: function () {
+            var a = $scope.layout.panel.left.expanded;
+            var b = $scope.layout.panel.right.expanded;
+
+            return a == b && a == false;
+        },
+        setPanelBig: function (panelName) {
+            var oppositePanelName = panelName == 'left' ? 'right' : 'left';
+
+            $scope.layout.panel[panelName] = {
+                expanded: true,
+                collapsed: false
+            };
+
+            $scope.layout.panel[oppositePanelName] = {
+                expanded: false,
+                collapsed: true
+            };
+        }
     };
 
 
