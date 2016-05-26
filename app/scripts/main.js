@@ -74,6 +74,8 @@ app.controller('LayoutController', function LayoutController($scope) {
         }
     };
 
+    // On initial load restore the state.
+    $scope.functions.restoreState();
 
     // A small trick to block transitions on page load.
     // Because we use a renderer we are a little late when rendering and
